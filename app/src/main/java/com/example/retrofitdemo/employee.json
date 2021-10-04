@@ -1,0 +1,23 @@
+{
+  "firstName": "Minhaj",
+  "address": {
+    "City": "Dhaka",
+    "Country": "Bangladesh"
+  },
+  "age": 25,
+  "family": [
+    {
+      "age": 30,
+      "role": "Husband"
+    },
+    {
+      "age": 60,
+      "role": "Mother"
+    },
+    {
+      "age": 70,
+      "role": "Father"
+    }
+  ],
+  "mail": "minhaj@gmail.com"
+}
