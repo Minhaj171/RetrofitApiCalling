@@ -15,6 +15,7 @@ import com.example.retrofitdemo.model.FamilyMember;
 import com.example.retrofitdemo.apitestmodel.Post;
 import com.google.gson.Gson;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.FieldMap;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mainBinding;
@@ -44,7 +46,93 @@ public class MainActivity extends AppCompatActivity {
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
 //        getPosts();
-        getComments();
+//        getComments();
+//        createPost();
+//        updatePost();
+          deletePost();
+
+    }
+
+    private void deletePost() {
+        Call<Void> call = jsonPlaceHolderApi.deletePost(3);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {
+                mainBinding.textView.setText("Code: " + response.code());
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                mainBinding.textView.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void updatePost() {
+        Post post = new Post(26, null, "body");
+        Call<Post> call = jsonPlaceHolderApi.putPost(5,post);
+        call.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
+                if (!response.isSuccessful()){
+                    mainBinding.textView.setText("Code: " + response.code());
+                    return;
+                }
+
+                Post postResponse = response.body();
+                String content = "";
+                assert postResponse != null;
+                content += "Code: " + response.code() + "\n";
+                content += "ID: " + postResponse.getId() + "\n";
+                content += "User ID: " + postResponse.getUserId() + "\n";
+                content += "Title: " + postResponse.getTitle() + "\n";
+                content += "Body: " + postResponse.getText() + "\n\n";
+
+                mainBinding.textView.append(content);
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
+                mainBinding.textView.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void createPost() {
+//        Post post = new Post(23, "Tittle", "body");
+
+        Map<String, String> params = new HashMap<>();
+        params.put("userId", "23");
+        params.put("Title", "Hello world");
+        Call<Post> call = jsonPlaceHolderApi.createPost(params);
+
+        call.enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
+                if (!response.isSuccessful()){
+                    mainBinding.textView.setText("Code: " + response.code());
+                    return;
+                }
+
+                Post postResponse = response.body();
+                String content = "";
+                assert postResponse != null;
+                content += "Code: " + response.code() + "\n";
+                content += "ID: " + postResponse.getId() + "\n";
+                content += "User ID: " + postResponse.getUserId() + "\n";
+                content += "Title: " + postResponse.getTitle() + "\n";
+                content += "Body: " + postResponse.getText() + "\n\n";
+
+                mainBinding.textView.append(content);
+
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Post> call, @NonNull Throwable t) {
+                mainBinding.textView.setText(t.getMessage());
+
+            }
+        });
     }
 
     private void getComments() {
@@ -69,9 +157,6 @@ public class MainActivity extends AppCompatActivity {
                     mainBinding.textView.append(content);
 
                 }
-
-
-
 
             }
 
