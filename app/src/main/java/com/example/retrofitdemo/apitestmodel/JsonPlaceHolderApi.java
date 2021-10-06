@@ -56,5 +56,7 @@ public interface JsonPlaceHolderApi {
     @DELETE("posts/{id}")
     Call<Void> deletePost(@Path("id") int id);
 
+    @GET("continents")
+    Call<BaseDataClass> getData(@Query("api_token") String token);
 
 }

@@ -3,11 +3,15 @@ package com.example.retrofitdemo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.retrofitdemo.apitestmodel.BaseDataClass;
 import com.example.retrofitdemo.apitestmodel.Comment;
 import com.example.retrofitdemo.apitestmodel.JsonPlaceHolderApi;
+import com.example.retrofitdemo.apitestmodel.ObjectDataClass;
 import com.example.retrofitdemo.databinding.ActivityMainBinding;
 import com.example.retrofitdemo.model.Addresss;
 import com.example.retrofitdemo.model.Employee;
@@ -39,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+//              .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("https://cricket.sportmonks.com/api/v2.0/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -49,8 +54,36 @@ public class MainActivity extends AppCompatActivity {
 //        getComments();
 //        createPost();
 //        updatePost();
-          deletePost();
+//        deletePost();
+        realApi();
 
+    }
+
+    private void realApi() {
+        Call<BaseDataClass> call = jsonPlaceHolderApi.getData("5TEVUIUOYCmYjZfLxHUN7Gkzgjk9PQLteAEU6PkFiRxZEef9XZdAcQHsgMKE");
+        call.enqueue(new Callback<BaseDataClass>() {
+            @Override
+            public void onResponse(@NonNull Call<BaseDataClass> call, @NonNull Response<BaseDataClass> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    List<ObjectDataClass> data = response.body().getData();
+                    setContinents(data);
+                }
+
+            }
+            @Override
+            public void onFailure(@NonNull Call<BaseDataClass> call, @NonNull Throwable t) {
+
+            }
+        });
+    }
+
+    private void setContinents(List<ObjectDataClass> data) {
+        ContinentsAdapter adapter = new ContinentsAdapter();
+        mainBinding.continentsRecycler.setAdapter(adapter);
+        mainBinding.continentsRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        BaseDataClass baseDataClass = new BaseDataClass(data);
+        adapter.updateBaseData(baseDataClass.getData());
     }
 
     private void deletePost() {

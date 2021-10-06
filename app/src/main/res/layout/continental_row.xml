@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="row"
+            type="com.example.retrofitdemo.apitestmodel.ObjectDataClass" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/continents_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/continents_tittle"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Resource: " />
+
+                <TextView
+                    android:id="@+id/continents"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/continents_tittle"
+                    android:text="@{row.continents}" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/continents_id_container"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/continents_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/continents_id_tittle"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Id: " />
+
+                <TextView
+                    android:id="@+id/continents_id"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/continents_id_tittle"
+                    android:text="@{row.id}" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/continents_name_container"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/continents_id_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/continents_name_tittle"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: " />
+
+                <TextView
+                    android:id="@+id/continents_name"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/continents_name_tittle"
+                    android:text="@{row.countryName}" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/continents_name_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/continents_time_tittle"
+                    style="@style/TextAppearance.MaterialComponents.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Time: " />
+
+                <TextView
+                    android:id="@+id/continents_time"
+                    style="@style/TextAppearance.MaterialComponents.Body2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_toEndOf="@+id/continents_time_tittle"
+                    android:text="@{row.time}" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
